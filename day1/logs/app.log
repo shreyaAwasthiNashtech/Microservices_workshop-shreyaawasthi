@@ -1,0 +1,73 @@
+2025-07-17T18:40:33.840+05:30  INFO 58750 --- [main] c.e.s.SpringbootappApplicationTests      : Starting SpringbootappApplicationTests using Java 21.0.7 with PID 58750 (started by nashtech in /home/nashtech/Downloads/eStore-be-app-main/eStore-be-app-main)
+2025-07-17T18:40:33.845+05:30  INFO 58750 --- [main] c.e.s.SpringbootappApplicationTests      : No active profile set, falling back to 1 default profile: "default"
+2025-07-17T18:40:34.181+05:30  INFO 58750 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-07-17T18:40:34.182+05:30  INFO 58750 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2025-07-17T18:40:34.237+05:30  INFO 58750 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 53 ms. Found 5 R2DBC repository interfaces.
+2025-07-17T18:40:34.421+05:30  INFO 58750 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-07-17T18:40:34.422+05:30  INFO 58750 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-07-17T18:40:34.428+05:30  INFO 58750 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2025-07-17T18:40:34.978+05:30 DEBUG 58750 --- [main] o.s.w.r.handler.SimpleUrlHandlerMapping  : Patterns [/ws/chat] in 'webSocketMapping'
+2025-07-17T18:40:35.012+05:30 DEBUG 58750 --- [main] o.s.w.s.adapter.HttpWebHandlerAdapter    : enableLoggingRequestDetails='false': form data and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-07-17T18:40:35.402+05:30 DEBUG 58750 --- [main] s.w.r.r.m.a.RequestMappingHandlerMapping : 1 mappings in 'requestMappingHandlerMapping'
+2025-07-17T18:40:35.405+05:30 DEBUG 58750 --- [main] o.s.w.r.f.s.s.RouterFunctionMapping      : 6 RouterFunction(s) in 'routerFunctionMapping'
+2025-07-17T18:40:35.449+05:30  INFO 58750 --- [main] n.d.b.g.c.a.GrpcClientAutoConfiguration  : Detected grpc-netty-shaded: Creating ShadedNettyChannelFactory + InProcessChannelFactory
+2025-07-17T18:40:35.523+05:30  INFO 58750 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoints beneath base path '/actuator'
+2025-07-17T18:40:35.558+05:30 DEBUG 58750 --- [main] o.s.w.r.r.m.a.ControllerMethodResolver   : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 @ExceptionHandler
+2025-07-17T18:40:35.586+05:30 DEBUG 58750 --- [main] o.s.w.s.adapter.HttpWebHandlerAdapter    : enableLoggingRequestDetails='false': form data and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-07-17T18:40:35.621+05:30  INFO 58750 --- [main] g.s.a.GrpcServerFactoryAutoConfiguration : Detected grpc-netty-shaded: Creating ShadedNettyGrpcServerFactory
+2025-07-17T18:40:36.034+05:30  INFO 58750 --- [main] n.d.b.g.s.s.AbstractGrpcServerFactory    : Registered gRPC service: ChatService, bean: chatServiceImpl, class: com.evolve.grpc.ChatServiceImpl
+2025-07-17T18:40:36.035+05:30  INFO 58750 --- [main] n.d.b.g.s.s.AbstractGrpcServerFactory    : Registered gRPC service: grpc.health.v1.Health, bean: grpcHealthService, class: io.grpc.protobuf.services.HealthServiceImpl
+2025-07-17T18:40:36.035+05:30  INFO 58750 --- [main] n.d.b.g.s.s.AbstractGrpcServerFactory    : Registered gRPC service: grpc.reflection.v1alpha.ServerReflection, bean: protoReflectionService, class: io.grpc.protobuf.services.ProtoReflectionService
+2025-07-17T18:40:36.082+05:30  INFO 58750 --- [main] n.d.b.g.s.s.GrpcServerLifecycle          : gRPC Server started, listening on address: *, port: 9090
+2025-07-17T18:40:36.133+05:30  INFO 58750 --- [main] o.s.b.rsocket.netty.NettyRSocketServer   : Netty RSocket started on port 7000
+2025-07-17T18:40:36.142+05:30  INFO 58750 --- [main] c.e.s.SpringbootappApplicationTests      : Started SpringbootappApplicationTests in 2.498 seconds (process running for 2.99)
+2025-07-17T18:41:36.749+05:30  INFO 59728 --- [main] com.evolve.springbootapp.SpringBootApp   : Starting SpringBootApp using Java 21.0.7 with PID 59728 (/home/nashtech/Downloads/eStore-be-app-main/eStore-be-app-main/target/classes started by nashtech in /home/nashtech/Downloads/eStore-be-app-main/eStore-be-app-main)
+2025-07-17T18:41:36.750+05:30  INFO 59728 --- [main] com.evolve.springbootapp.SpringBootApp   : No active profile set, falling back to 1 default profile: "default"
+2025-07-17T18:41:37.029+05:30  INFO 59728 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-07-17T18:41:37.029+05:30  INFO 59728 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2025-07-17T18:41:37.089+05:30  INFO 59728 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 57 ms. Found 5 R2DBC repository interfaces.
+2025-07-17T18:41:37.250+05:30  INFO 59728 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-07-17T18:41:37.251+05:30  INFO 59728 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-07-17T18:41:37.255+05:30  INFO 59728 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 0 ms. Found 0 Redis repository interfaces.
+2025-07-17T18:41:37.515+05:30  INFO 59728 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-07-17T18:41:37.522+05:30  INFO 59728 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-07-17T18:41:37.522+05:30  INFO 59728 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.24]
+2025-07-17T18:41:37.599+05:30  WARN 59728 --- [main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'embeddedRedisConfig': Invocation of init method failed
+2025-07-17T18:41:37.608+05:30  INFO 59728 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-07-17T18:41:37.616+05:30 ERROR 59728 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'embeddedRedisConfig': Invocation of init method failed
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:222) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:422) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1780) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962) ~[spring-context-6.1.8.jar:6.1.8]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.8.jar:6.1.8]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.3.0.jar:3.3.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.0.jar:3.3.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.0.jar:3.3.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.0.jar:3.3.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363) ~[spring-boot-3.3.0.jar:3.3.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352) ~[spring-boot-3.3.0.jar:3.3.0]
+	at com.evolve.springbootapp.SpringBootApp.main(SpringBootApp.java:25) ~[classes/:na]
+Caused by: java.lang.RuntimeException: Can't start redis server. Check logs for details. Redis process log: 
+[59815] 17 Jul 18:41:37.599 # Creating Server TCP listening socket 127.0.0.1:6379: bind: Address already in use
+	at redis.embedded.AbstractRedisInstance.awaitRedisServerReady(AbstractRedisInstance.java:70) ~[embedded-redis-0.7.3.jar:na]
+	at redis.embedded.AbstractRedisInstance.start(AbstractRedisInstance.java:42) ~[embedded-redis-0.7.3.jar:na]
+	at redis.embedded.RedisServer.start(RedisServer.java:9) ~[embedded-redis-0.7.3.jar:na]
+	at com.evolve.config.EmbeddedRedisConfig.startRedis(EmbeddedRedisConfig.java:17) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:457) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:401) ~[spring-beans-6.1.8.jar:6.1.8]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:219) ~[spring-beans-6.1.8.jar:6.1.8]
+	... 18 common frames omitted
+
