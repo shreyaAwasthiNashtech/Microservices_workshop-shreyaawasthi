@@ -55,18 +55,25 @@ When building real-time features like notifications, live updates, or chat, you 
 The bootstrap.yml file is like the first file Spring Boot reads when our application starts. It’s especially important in applications that use Spring Cloud Config.
 Imagine we're building a hotel chain management system with many services—each hotel (service) wants to pick its room settings (configuration) from a central settings book (Git repo). The bootstrap.yml tells our service where that central book is kept and what name to use when reading it.
 So, it’s used to:
+
   -> Set the application name (e.g., product-service)
+  
   -> Define the config server URL
+  
   -> Set the environment (like dev, test, prod)
+  
 Without it, the service wouldn’t know where to fetch its actual config settings from.
 
 **2. How does @RefreshScope work and when should it be used?**
 @RefreshScope is used when you want your beans (like services or configuration classes) to reload their values if the configuration changes. Let’s say you have a shipping service that charges ₹50 per delivery. This value is fetched from config. If tomorrow the price changes to ₹70 in Git, you don’t want to restart the app.
+
 With @RefreshScope, you just call /actuator/refresh, and the bean will pick up the new value automatically.
+
 Use it when your bean needs to respond to config changes dynamically, like pricing, limits, or toggles.
 
 **3. What’s the difference between static and dynamic route configuration in Gateway?**
 Static routes are hardcoded in your gateway’s application.yml. If you want to change them, you have to redeploy the gateway.
+
 Example:
 routes:
   - id: product-service
@@ -86,13 +93,15 @@ After updating the value in your Git repo (like maxLoginAttempts), you can:
 1. Send a POST request to /actuator/refresh endpoint of the service.
 2. If the bean is annotated with @RefreshScope, the new value is picked up instantly.
 You can test by hitting the endpoint or checking logs to see the change reflected.
-It's like refreshing your browser without closing it—changes show up instantly.
+It's like refreshing your browser without closing it changes show up instantly.
 
 **6. What’s the difference between global and per-route filters in Gateway?**
   -> Global filters apply to every request that goes through the gateway.
       Example: Logging every request’s URL or checking for a token in the header.
+      
   -> Per-route filters apply only to specific routes.
       Example: You might want a custom header added only when calling /orders/** and not /products/**.
+      
 Think of global filters like entrance security checks at a mall, and per-route filters like checks at a specific shop (like verifying age before entering a liquor store).
 
 **7. How does Spring Cloud Bus enhance dynamic config refresh?**
@@ -102,9 +111,13 @@ It's like updating a policy and your team members automatically getting notified
 
 **8. How is JWT verified at the Gateway level?**
 The gateway intercepts every request and checks the JWT token (usually found in the Authorization header). It validates the token’s:
+
 -> Signature (to ensure it’s not tampered)
+
 ->Expiry time
+
 -> User roles or claims
+
 If all checks pass, the request goes through. Otherwise, it’s rejected.
 It’s like showing your ID at a building entrance. If it’s expired or fake, you’re not allowed in.
 
@@ -117,10 +130,15 @@ It’s like using a contact name instead of remembering a phone number.
 
 **10. Why prefer centralized config and not embedded .yml?**
 With centralized config (like Spring Cloud Config Server), all your microservices get their settings from a common Git repo. This has benefits:
+
   -> One place to update everything
+  
   -> Easier environment switching (dev, test, prod)
+  
   -> Avoids mistakes like different configs across services
+  
   -> No need to rebuild apps for minor config changes
+  
 It’s like managing employee records from one HR portal instead of each department keeping their own Excel sheet.
 
 
