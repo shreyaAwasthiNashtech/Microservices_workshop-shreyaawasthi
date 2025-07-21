@@ -52,6 +52,7 @@ When building real-time features like notifications, live updates, or chat, you 
 
 # Core Concept Questions – Day 2
 **1. What is the purpose of bootstrap.yml in a config client?**
+
 The bootstrap.yml file is like the first file Spring Boot reads when our application starts. It’s especially important in applications that use Spring Cloud Config.
 Imagine we're building a hotel chain management system with many services—each hotel (service) wants to pick its room settings (configuration) from a central settings book (Git repo). The bootstrap.yml tells our service where that central book is kept and what name to use when reading it.
 So, it’s used to:
@@ -65,6 +66,7 @@ So, it’s used to:
 Without it, the service wouldn’t know where to fetch its actual config settings from.
 
 **2. How does @RefreshScope work and when should it be used?**
+
 @RefreshScope is used when you want your beans (like services or configuration classes) to reload their values if the configuration changes. Let’s say you have a shipping service that charges ₹50 per delivery. This value is fetched from config. If tomorrow the price changes to ₹70 in Git, you don’t want to restart the app.
 
 With @RefreshScope, you just call /actuator/refresh, and the bean will pick up the new value automatically.
@@ -72,6 +74,7 @@ With @RefreshScope, you just call /actuator/refresh, and the bean will pick up t
 Use it when your bean needs to respond to config changes dynamically, like pricing, limits, or toggles.
 
 **3. What’s the difference between static and dynamic route configuration in Gateway?**
+
 Static routes are hardcoded in your gateway’s application.yml. If you want to change them, you have to redeploy the gateway.
 
 Example:
@@ -84,11 +87,13 @@ Dynamic routes, on the other hand, are stored in a Git repo (via config server).
 Static routes are okay for small projects. Dynamic ones are better for big systems where routes change often or need to be managed centrally.
 
 **4. How does rate limiting in Spring Cloud Gateway work internally?**
+
 Rate limiting ensures that no one abuses your services by hitting them too many times in a short period. Think of it like letting only 100 customers into a store every minute.
 Internally, Spring Cloud Gateway uses token buckets or Redis to track how many requests a user or IP has made. If the user has used up all tokens (or limit), further requests are rejected with an HTTP 429 (Too Many Requests).
 Example: You may allow 20 requests/minute per user. If a user sends 25, 5 of them will be denied.
 
 **5. How do you test a configuration change without restarting services?**
+
 After updating the value in your Git repo (like maxLoginAttempts), you can:
 1. Send a POST request to /actuator/refresh endpoint of the service.
 2. If the bean is annotated with @RefreshScope, the new value is picked up instantly.
@@ -96,6 +101,7 @@ You can test by hitting the endpoint or checking logs to see the change reflecte
 It's like refreshing your browser without closing it changes show up instantly.
 
 **6. What’s the difference between global and per-route filters in Gateway?**
+
   -> Global filters apply to every request that goes through the gateway.
       Example: Logging every request’s URL or checking for a token in the header.
       
@@ -105,11 +111,13 @@ It's like refreshing your browser without closing it changes show up instantly.
 Think of global filters like entrance security checks at a mall, and per-route filters like checks at a specific shop (like verifying age before entering a liquor store).
 
 **7. How does Spring Cloud Bus enhance dynamic config refresh?**
+
 Spring Cloud Bus acts like a message courier between your services. If one service refreshes its config, the bus sends a message to all others saying, “Hey, config has changed, refresh yourself!”
 So instead of calling /actuator/refresh on each microservice, you call it on one, and all others listen and refresh themselves automatically.
 It's like updating a policy and your team members automatically getting notified instead of calling them one by one.
 
 **8. How is JWT verified at the Gateway level?**
+
 The gateway intercepts every request and checks the JWT token (usually found in the Authorization header). It validates the token’s:
 
 -> Signature (to ensure it’s not tampered)
@@ -122,6 +130,7 @@ If all checks pass, the request goes through. Otherwise, it’s rejected.
 It’s like showing your ID at a building entrance. If it’s expired or fake, you’re not allowed in.
 
 **9. What’s the role of service discovery when routing via Gateway?**
+
 Service discovery (like Eureka) helps the gateway know the exact location of your services.
 You don’t have to hardcode URLs like http://localhost:8081. Instead, you register each service (product, order, etc.) with Eureka. Then the gateway just says:
 uri: lb://product-service
@@ -129,6 +138,7 @@ lb means “load balanced”, and Eureka will tell the gateway where product-ser
 It’s like using a contact name instead of remembering a phone number.
 
 **10. Why prefer centralized config and not embedded .yml?**
+
 With centralized config (like Spring Cloud Config Server), all your microservices get their settings from a common Git repo. This has benefits:
 
   -> One place to update everything
