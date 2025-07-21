@@ -1,0 +1,3 @@
+com/estore/apigateway/ApiGatewayApplication.class
+com/estore/apigateway/config/SecurityConfig.class
+com/estore/apigateway/filters/RequestLoggingFilter.class
