@@ -137,12 +137,11 @@ uri: lb://product-service
 lb means “load balanced”, and Eureka will tell the gateway where product-service is running.
 It’s like using a contact name instead of remembering a phone number.
 
-**10. Why prefer centralized config and not embedded .yml?**
+**10. Why prefer centralised config and not embedded .yml?**
 
-With centralized config (like Spring Cloud Config Server), all your microservices get their settings from a common Git repo. This has benefits:
-
+With centralised config (like Spring Cloud Config Server), all your microservices get their settings from a common Git repo. This has benefits:
   -> One place to update everything
-  
+
   -> Easier environment switching (dev, test, prod)
   
   -> Avoids mistakes like different configs across services
@@ -151,4 +150,152 @@ With centralized config (like Spring Cloud Config Server), all your microservice
   
 It’s like managing employee records from one HR portal instead of each department keeping their own Excel sheet.
 
+# Core Concept Questions - Day 3
+**1. What’s the difference between client-side and server-side service discovery?**
+Client-side service discovery means the client is responsible for querying the service registry and determining which instance to call. The client also handles load balancing.
 
+Used in: Netflix Eureka, Ribbon
+
+Mechanism:
+
+  A client (like Spring Cloud Gateway) uses a DiscoveryClient to get a list of service instances from Eureka.
+
+  Then it applies a load balancing algorithm (e.g., Round Robin) to pick one instance.
+
+  The request is sent directly to the selected instance.
+
+Server-side service discovery delegates the responsibility to a load balancer or proxy (like AWS ALB, Kubernetes kube-proxy, or Istio).
+
+Used in: Consul (with Envoy), Kubernetes DNS + Services
+
+Mechanism:
+
+  The client calls a fixed endpoint.
+
+  The server-side proxy queries the registry or DNS to find healthy instances and forwards the request.
+
+  | Aspect         | Client-Side Discovery      | Server-Side Discovery        |
+| ---------------- | -------------------------- | ---------------------------- |
+| Load balancing   | On the client              | On the server/proxy          |
+| Logic complexity | Implemented in each client | Centralized in load balancer |
+| Example tools    | Eureka + Ribbon/Gateway    | K8s DNS, Consul + Envoy      |
+
+
+**2. How does Eureka detect dead service instances?**
+Eureka relies on a self-preservation and heartbeat-based model.
+
+  Registered instances send heartbeats (via REST call: PUT /eureka/apps/{app-name}/{id}) at a regular interval (leaseRenewalIntervalInSeconds, default: 30s).
+
+  If Eureka does not receive heartbeats within a configured leaseExpirationDurationInSeconds (default: 90s), it marks the instance as unavailable.
+
+  Eureka uses a self-preservation mode to avoid removing too many instances during network partitions. In this mode, it temporarily suspends eviction.
+
+Important Configs:
+eureka.instance.lease-renewal-interval-in-seconds=30
+eureka.instance.lease-expiration-duration-in-seconds=90
+
+**3. Why is the /actuator/health endpoint important for service discovery?**
+The /actuator/health endpoint is a critical indicator of service readiness.
+
+  Eureka or a load balancer can poll this endpoint to determine if the service is actually healthy, not just "up" but operational.
+
+  It helps avoid routing traffic to partially started services (e.g., database not connected, message queue not available).
+
+  Spring Boot exposes it via Spring Boot Actuator. You can extend it to add custom health indicators.
+
+Example:
+{
+  "status": "UP",
+  "components": {
+    "db": { "status": "UP" },
+    "diskSpace": { "status": "UP" }
+  }
+}
+
+Important for cloud-native deployments and container orchestration (like Kubernetes) where readiness/liveness probes often rely on it.
+
+**4. How does lb:// routing in Gateway work with DiscoveryClient?**
+  When a route in Spring Cloud Gateway uses uri: lb://<service-name>, it signals the use of Spring Cloud LoadBalancer.
+
+  The Gateway uses the DiscoveryClient to fetch available instances from Eureka.
+
+  It passes those instances to the LoadBalancerClient, which picks one using the configured strategy (default: Round Robin).
+
+  Gateway then rewrites the request URI and forwards it to the chosen instance.
+
+Example:
+  - id: user-service
+    uri: lb://user-service
+    predicates:
+    - Path=/user/**
+
+Behind the scenes:
+  1. DiscoveryClient.getInstances("user-service")
+  2. LoadBalancer picks one instance (e.g., http://localhost:8083)
+  3. Request forwarded to /user/** on that instance
+
+**5. What happens when a registered service goes down?**
+    The failed instance stops sending heartbeats to Eureka.
+
+    After leaseExpirationDurationInSeconds passes without renewal, Eureka marks the instance as DOWN and removes it from the service registry.
+
+    If self-preservation mode is ON, Eureka may delay eviction.
+
+    Clients like Spring Cloud Gateway no longer receive that instance in DiscoveryClient.getInstances() calls.
+
+    If circuit breaker or retry logic is configured (e.g., using Resilience4j), fallback or retry behaviour may be applied.
+
+Fallback Consideration:
+@CircuitBreaker(name = "userService", fallbackMethod = "fallbackUser")
+public User getUser(...) { ... }
+
+**6. Compare Eureka, Consul, and Kubernetes DNS-based discovery**
+When building microservices, we need a way for services to discover and talk to each other. Eureka, Consul, and Kubernetes each offer service discovery, but they work differently depending on the ecosystem and infrastructure.
+
+Eureka (by Netflix)
+    Part of the Spring Cloud ecosystem, designed for Java/Spring Boot apps.
+    Uses client-side discovery, where each service queries Eureka and decides which instance to call.
+    Services send heartbeats to stay registered; if they stop, Eureka eventually removes them.
+    Commonly used with Spring Cloud Gateway and Spring LoadBalancer.
+    Does not perform active health checks, relies on services to self-report.
+
+Consul (by HashiCorp)
+    Language-agnostic and infrastructure-independent, works with Java, Go, Docker, etc.
+    Supports both client-side and server-side discovery.
+    Performs active health checks (HTTP/TCP/Script) from the server.
+    Services can be registered manually or automatically (e.g., via config files or API).
+    Often used with Envoy proxy for load balancing and traffic routing.
+    Includes a built-in Key-Value store and UI dashboard for monitoring.
+
+Kubernetes DNS-based Discovery
+    Integrated deeply into Kubernetes (K8s), works out of the box with no extra tools.
+    Uses server-side discovery via internal DNS.
+      Example: a service named user-service can be reached at http://user-service.default.svc.cluster.local.
+    Uses Kubernetes liveness and readiness probes to decide if a pod is healthy and should receive traffic.
+    Load balancing is handled by kube-proxy or service meshes like Istio.
+    Doesn’t require apps to query any registry — it’s fully automated using labels and selectors.
+
+
+**7. How does Spring LoadBalancer choose which instance to call?**
+Spring Cloud LoadBalancer, a replacement for Netflix Ribbon, uses Round-Robin load balancing by default.
+    It fetches available service instances from the DiscoveryClient.
+    It maintains an index and rotates through the list for each incoming request.
+    You can plug in a custom strategy (like random, weighted, response-time aware).
+
+Round Robin Example:
+  @Service
+  public class LoadBalancerService {
+    @Autowired
+    private LoadBalancerClient loadBalancer;
+
+    public URI getUri(String serviceName) {
+      ServiceInstance instance = loadBalancer.choose(serviceName);
+      return instance.getUri(); // chosen instance based on strategy
+  }
+}
+
+Customisation:
+spring.cloud.loadbalancer.ribbon.enabled=false
+spring.cloud.loadbalancer.health-check.enabled=true
+
+You can implement a ReactorServiceInstanceLoadBalancer bean to plug in a custom algorithm (e.g., least connections).
