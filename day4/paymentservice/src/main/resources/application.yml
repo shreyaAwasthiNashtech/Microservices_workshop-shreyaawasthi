@@ -1,5 +1,34 @@
 server:
-  port: 8085
-spring:
-  application:
-    name: payment-service
+  port: 8080
+
+resilience4j:
+  retry:
+    instances:
+      paymentRetry:
+        max-attempts: 3
+        wait-duration: 1s
+        retry-exceptions:
+          - java.lang.RuntimeException
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        max-wait-duration: 4s
+
+  timelimiter:
+    instances:
+      paymentRetry:
+        timeout-duration: 2s
+
+  bulkhead:
+    instances:
+      paymentRetry:
+        max-concurrent-calls: 5
+        max-wait-duration: 0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always

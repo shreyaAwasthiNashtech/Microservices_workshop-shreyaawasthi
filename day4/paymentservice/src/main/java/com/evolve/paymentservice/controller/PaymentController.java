@@ -1,21 +1,22 @@
-package com.evolve.paymentservice.controller;
+package com.evolve.Payment_Application.controller;
 
+import com.evolve.Payment_Application.service.PaymentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 public class PaymentController {
 
-    @GetMapping("/payment/process")
-    public String processPayment() throws InterruptedException {
-        int random = ThreadLocalRandom.current().nextInt(1, 4);
-        if (random == 1) {
-            throw new RuntimeException("Payment service failed!"); // simulating failure
-        } else {
-            Thread.sleep(3000); // simulating the delay
-        }
-        return "Payment processed successfully!";
+    private final PaymentService paymentService;
+
+    public PaymentController(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+
+    @GetMapping("/payment/retry")
+    public CompletableFuture<String> retryPaymentEndpoint() {
+        return paymentService.makePayment();
     }
 }
