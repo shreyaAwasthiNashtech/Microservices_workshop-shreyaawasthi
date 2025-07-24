@@ -49,7 +49,7 @@ MDC (Mapped Diagnostic Context) stores values (like traceId, userId) for the cur
 
 You search using a simple query like:
 
-```text
+``text
 traceId:"c7a3efab34a1b2c5"
 
 Kibana will return all logs with that traceId, even across multiple services. Very useful when debugging distributed systems.
@@ -66,6 +66,6 @@ Use HTTP metrics like http.server.requests to track 5xx errors and latency.
 Grafana dashboards can visualise these with graphs, gauges, and alerts.
 
 
-10. How does sampling affect Zipkin trace accuracy and performance?
+### 10. How does sampling affect Zipkin trace accuracy and performance?
 
 Sampling means only some requests are traced to reduce overhead. If you trace 100% of requests, it’s accurate but can be heavy on memory and network. Sampling 10% is lighter, but you might miss some rare issues. You can adjust sampling rate in application.yml.
